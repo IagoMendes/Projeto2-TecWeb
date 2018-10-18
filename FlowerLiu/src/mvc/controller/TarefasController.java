@@ -12,8 +12,7 @@ public class TarefasController {
 	
 	@RequestMapping("/")
 	 public String execute() {
-		System.out.println("Lógica do MVC");
-		return "info";
+		return "home";
 	 }
 	@RequestMapping("criaCategoria")
 	 public String form() {
