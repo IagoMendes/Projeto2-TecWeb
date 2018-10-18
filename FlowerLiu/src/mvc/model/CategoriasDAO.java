@@ -2,9 +2,9 @@ package mvc.model;
 import java.sql.*;
 import java.util.*;
 
-public class TarefasDAO {
+public class CategoriasDAO {
 	private Connection connection = null;
-	public TarefasDAO() {
+	public CategoriasDAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(
@@ -16,7 +16,6 @@ public class TarefasDAO {
 	
 	public void adicionaCategoria(Categoria categoria) {
 		try {
-			System.out.println(categoria.getTitulo());
 			String sql = "INSERT INTO categorias (titulo) values(?)";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -80,16 +79,26 @@ public class TarefasDAO {
 		} catch(SQLException e) {System.out.println(e);}
 	}
 	
-	public void finaliza(Long id) {
+	public List<Categoria> procuraCategoria(String busca){          			    
+		PreparedStatement stmt;
+		List<Categoria>buscaCategorias = new ArrayList<Categoria>();
 		try {
-			String sql = "UPDATE tarefa SET finalizado=?, dataFinalizacao=? " + "WHERE id=?";
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setBoolean(1, true);
-			stmt.setDate(2, new Date(Calendar.getInstance().getTimeInMillis()));
-			stmt.setLong(3, id);
-			stmt.executeUpdate();
+			stmt = connection.prepareStatement("SELECT titulo FROM categorias WHERE titulo LIKE '%?%'");
+			stmt.setString(1, "'%" + busca + "%'");
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Categoria categ = new Categoria();
+				categ.setIdCategoria(rs.getInt("idCategoria"));
+				categ.setTitulo(rs.getString("titulo"));
+				buscaCategorias.add(categ);
+				}
+			rs.close();
 			stmt.close();
-		} catch(SQLException e) {System.out.println(e);}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return buscaCategorias;	
 	}
 	
 	public void close() {
