@@ -10,10 +10,10 @@ prefix="form" %>
 </head>
 <body>
 
-	<h3>Adicionar Tarefa</h3>
-	<form action="adicionaTarefa" method="post">
-		Descrição: <br/>
-		<textarea name="descricao" rows="6" cols="80"></textarea><br>
+	<h3>Adicionar Categoria</h3>
+	<form action="adicionaCategoria" method="post">
+		Titulo: <br/>
+		<textarea name="titulo" rows="6" cols="5"></textarea><br>
 		<input type="submit" value="Adicionar">
 	</form>
 

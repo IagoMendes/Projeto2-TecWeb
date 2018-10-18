@@ -1,0 +1,115 @@
+@charset "ISO-8859-1";
+
+/*Alguns dos items abaixo foram modificados do site OpenSource - https://codepen.io/SitePoint/pen/brmXRX?editors=0100*/
+
+body {
+  margin: 0;
+  font-size: 15px;
+  font-family:"Lucida Sans Unicode";
+  line-height: 1.3em;
+}
+.init{
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 40px 50px 1fr;
+    color: #eee;
+}
+.navbar {
+  padding-left: 13px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  background-color: #3e3eff;
+}
+.mainbar {
+  padding-left: 12px;
+  font-size: 1.2rem;
+}
+.navbar.board {
+  font-size: 1.4rem;
+  padding-left: 12px;
+}
+.listas {
+  display: flex;
+  overflow-x: auto;
+  background-color: #8282ff;
+}
+
+.listas > * {
+  flex: 0 0 auto;
+  margin-left: 10px;
+}
+.listas::after {
+  content: '';
+  flex: 0 0 10px;
+}
+
+.lista {
+  width: 300px;
+  height: calc(100% - 10px - 17px);
+}
+.lista > * {
+  background-color: #e2e4e6;
+  color: #333;
+  padding: 0 10px;
+}
+.lista header {
+  line-height: 36px;
+  font-size: 16px;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.lista footer {
+  line-height: 36px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #888;
+}
+.lista a {
+  line-height: 36px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #888;
+}
+.lista ul {
+  list-style: none;
+  margin: 0;
+  max-height: calc(100% - 36px - 36px);
+  overflow-y: auto;
+}
+.lista ul li {
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.lista ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+ul{
+  list-style: none;
+  margin: 0;
+  max-height: calc(100% - 36px - 36px);
+  overflow-y: auto;
+}
+cria-categoria h3{
+  font-family:"Lucida Sans Unicode";
+  line-height: 36px;
+  font-size: 16px;
+}
+input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 80%;
+}
+.searchBar{
+	display: block;
+	width: 100%;
+	height: 8%;
+	background-color:#8282ff;
+}
