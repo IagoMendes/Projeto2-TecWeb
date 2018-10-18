@@ -1,121 +1,80 @@
 package mvc.model;
-import java.sql.Date;
 import java.sql.*;
 import java.util.*;
+
 public class TarefasDAO {
 	private Connection connection = null;
 	public TarefasDAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost/meus_dados","root", "Certezajorge123");
+					"jdbc:mysql://localhost/teepo","root", "Certezajorge123");
 		} catch (SQLException | ClassNotFoundException e){
 			e.printStackTrace();
 		}
 	}
 	
-	public void adicionaDescricao(Tarefa tarefa) {
+	public void adicionaCategoria(Categoria categoria) {
 		try {
-			
-			System.out.println(tarefa.getDescricao());
-			String sql = "INSERT INTO tarefa (descricao) values(?)";
+			System.out.println(categoria.getTitulo());
+			String sql = "INSERT INTO categorias (titulo) values(?)";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
-			stmt.setString(1,tarefa.getDescricao());
+			stmt.setString(1,categoria.getTitulo());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {e.printStackTrace();}
 	}
 	
-	public void adiciona(Tarefa tarefa) {
+	public List<Categoria> getCategorias() {
+		List<Categoria> Categorias= new ArrayList<Categoria>();
 		try {
-			String sql = "INSERT INTO tarefa" + "(descricao,finalizado,dataFinalizacao) values(?,?,?)";
-			PreparedStatement stmt =
-					connection.prepareStatement(sql);
-			stmt.setString(1,tarefa.getDescricao());
-			stmt.setBoolean(2, tarefa.isFinalizado());
-			stmt.setDate(3, new
-					Date(tarefa.getDataFinalizacao().getTimeInMillis()));
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {e.printStackTrace();}
-	}
-	
-	public List<Tarefa> getLista() {
-		List<Tarefa> tarefas = new ArrayList<Tarefa>();
-		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM tarefa");
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categorias");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Tarefa tarefa = new Tarefa();
-				tarefa.setId(rs.getLong("id"));
-				tarefa.setDescricao(rs.getString("descricao"));
-
-				tarefa.setFinalizado(rs.getBoolean("finalizado"));
-				Calendar data = Calendar.getInstance();
-				Date dataFinalizacao =
-						rs.getDate("dataFinalizacao");
-				if(dataFinalizacao!=null) {
-					data.setTime(dataFinalizacao);
-					tarefa.setDataFinalizacao(data);
-				}
-				tarefas.add(tarefa);
+				Categoria categ = new Categoria();
+				categ.setIdCategoria(rs.getInt("idCategoria"));
+				categ.setTitulo(rs.getString("titulo"));
+				Categorias.add(categ);
 			}
 			rs.close();
 			stmt.close();
 		} catch(SQLException e) {System.out.println(e);}
-		return tarefas;
+		return Categorias;
 	}
 	
-	public void remove(Tarefa tarefa) {
+	public void removeCategoria(Integer Id) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("DELETE FROM tarefa WHERE id=?");
-			stmt.setLong(1, tarefa.getId());
+			PreparedStatement stmt = connection.prepareStatement("DELETE FROM categorias WHERE idCategoria=?");
+			stmt.setLong(1, Id);
 			stmt.execute();
 			stmt.close();
 		} catch(SQLException e) {System.out.println(e);}
 	}
 	
-	public Tarefa buscaPorId(Long id) {
-		Tarefa tarefa = new Tarefa();
+	public Categoria getCategoriaFromId(Integer Id) {
+		Categoria categoria = new Categoria();
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM tarefa WHERE id=? ");
-			stmt.setLong(1, id);
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categorias WHERE idCategoria=?");
+			stmt.setLong(1, Id);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
-				tarefa.setId(rs.getLong("id"));
-				tarefa.setDescricao(rs.getString("descricao"));
-
-				tarefa.setFinalizado(rs.getBoolean("finalizado"));
-				Calendar data = Calendar.getInstance();
-				Date dataFinalizacao =
-						rs.getDate("dataFinalizacao");
-				if(dataFinalizacao!=null) {
-					data.setTime(dataFinalizacao);
-					tarefa.setDataFinalizacao(data);
-				}
+				categoria.setIdCategoria(rs.getInt("idCategoria"));
+				categoria.setTitulo(rs.getString("titulo"));
 			}
 			rs.close();
 			stmt.close();
 		} catch(SQLException e) {System.out.println(e);}
-		return tarefa;
+		return categoria;
 	}
 	
-	public void altera(Tarefa tarefa) {
+	public void alteraCategoria(Categoria categoria) {
 		try {
-			String sql = "UPDATE tarefa SET descricao=?, finalizado=?, " + "dataFinalizacao=? WHERE id=?";
+			String sql = "UPDATE categorias SET titulo=? WHERE idCategoria=?";
 			PreparedStatement stmt =
 					connection.prepareStatement(sql);
-			stmt.setString(1, tarefa.getDescricao());
-			stmt.setBoolean(2, tarefa.isFinalizado());
-			if(tarefa.getDataFinalizacao()!=null) {
-				stmt.setDate(3, new
-						Date(tarefa.getDataFinalizacao().getTimeInMillis()));
-			} else {
-				stmt.setDate(3, new
-						Date(Calendar.getInstance().getTimeInMillis()));
-			}
-			stmt.setLong(4, tarefa.getId());
+			stmt.setString(1, categoria.getTitulo());
+			stmt.setInt(2, categoria.getIdCategoria());
 			stmt.executeUpdate();
 			stmt.close();
 		} catch(SQLException e) {System.out.println(e);}
@@ -124,11 +83,9 @@ public class TarefasDAO {
 	public void finaliza(Long id) {
 		try {
 			String sql = "UPDATE tarefa SET finalizado=?, dataFinalizacao=? " + "WHERE id=?";
-			PreparedStatement stmt =
-					connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setBoolean(1, true);
-			stmt.setDate(2, new
-					Date(Calendar.getInstance().getTimeInMillis()));
+			stmt.setDate(2, new Date(Calendar.getInstance().getTimeInMillis()));
 			stmt.setLong(3, id);
 			stmt.executeUpdate();
 			stmt.close();
