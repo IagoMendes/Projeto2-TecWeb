@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>TecWeb- Projeto 1</title>
-    <link rel="stylesheet" type="text/css" href="settings.css">
+
+    <spring:url value="/resources/settings.css" var="mainCss" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<spring:url value="/resources/settings.js" var="mainJs" />
+	
+	<link href="${mainCss}" rel="stylesheet" />
+    <script src="${mainJs}"></script>
+    
 </head>
 <body>
 	<%@ page import="java.util.*,mvc.model.*,mvc.controller.*"%>

@@ -10,13 +10,15 @@
  http://www.springframework.org/schema/context
  http://www.springframework.org/schema/context/spring-context.xsd">
  <context:component-scan base-package="mvc" />
- <mvc:annotation-driven />
+
  <mvc:default-servlet-handler/>
  <bean
 class="org.springframework.web.servlet.view.InternalResourceViewResolver">
  <property name="prefix" value="/WEB-INF/views/"/>
  <property name="suffix" value=".jsp"/>
  </bean>
+ <mvc:resources mapping="/resources/**" location="/resources/" />
+<mvc:annotation-driven />
  <bean id="multipartResolver"
   class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
  </bean>
