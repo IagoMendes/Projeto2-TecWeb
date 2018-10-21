@@ -22,7 +22,10 @@ public class CategoriaController {
 		System.out.println("Inicio");
 		return "index";
 	 }	
-	
+	@RequestMapping("/home")
+	 public String home(HttpServletRequest request, HttpServletResponse response) {
+		return "home";
+	}
 	@RequestMapping(value = "/criaCategoria", method = RequestMethod.POST)
 	 public String criaCategoria(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("CRIO");

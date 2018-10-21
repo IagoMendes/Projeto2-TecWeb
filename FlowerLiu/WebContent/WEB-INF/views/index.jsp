@@ -12,7 +12,7 @@
         <nav class="navbar">Teeppo</nav> 
         <nav class="navbar board">Board</nav>   
         <div class="listas">
-            <a href="home.jsp">Clique aqui para acessar seu Teepo</a>
+            <a href="home">Clique aqui para acessar seu Teepo</a>
         </div>
     	</div>
     </body>
