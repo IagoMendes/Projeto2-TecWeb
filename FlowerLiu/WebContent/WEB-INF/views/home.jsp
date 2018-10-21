@@ -14,8 +14,10 @@
         <nav class="navbar board">Board</nav>   
         <div class="listas">
         	<div class="lista">
-                <a href="criaCategoria">><button>Criar Categoria</button></a>
-                <form action="ProcuraNota">
+        		<form action = "criaCategoria" method="post">
+                	<a href="criaCategoria"><button>Criar Categoria</button></a>
+                </form>
+                <form action="ProcuraNota" method="post">
 	                <input type="text" name="BuscaNota" placeholder="Search..">
 					<a href="procura.jsp"><button>Pesquisar</button></a>
 				</form>
@@ -51,7 +53,7 @@
         						</div>
            					</div>
            					<div style="display: inline-block">
-	           					<form action="RemoveNota">
+	           					<form action="RemoveNota" method="post">
 				           			<input type="hidden" name="IdNota" value="<%=IdNota%>">
 				           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
 				           			<a href="deletaNota"><button type="submit">Excluir Nota</button></a>
@@ -71,7 +73,7 @@
            		<br>
            		<div class="container">
            			<div style="display: inline-block">
-	           			<form action="RemoveCategoria2">
+	           			<form action="RemoveCategoria2" method="post">
 	           				<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
 	           				<a href="deletaCategoria"><button type="submit">Deletar Categoria</button></a>
 	           			</form>
