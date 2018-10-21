@@ -15,10 +15,10 @@
     <nav class="navbar">Board</nav>
     <div class="listas">
     	<div class="cria-categoria">
-	    	<!--  <form method="POST" action="/FlowerLiu/criaCategoria">
+	        <form method="post" action="criaCategoria">
 		   		<h3>Titulo da Categoria: <input type='text' name='tituloCategoria'></h3>
-		   		<a href=><button type="submit">Criar Categoria</button></a>
-		   	</form>-->
+		   		<a href="criaCategoria"><button type="submit">Criar Categoria</button></a>
+		   	</form>
     	</div>
         
         <%
