@@ -8,7 +8,7 @@ public class CategoriasDAO {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost/teepo","root", "Certezajorge123");
+					"jdbc:mysql://localhost/teepo","root", "Mendez575");
 		} catch (SQLException | ClassNotFoundException e){
 			e.printStackTrace();
 		}
