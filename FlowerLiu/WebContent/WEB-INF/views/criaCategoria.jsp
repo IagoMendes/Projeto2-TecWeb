@@ -14,22 +14,22 @@
     <nav class="navbar board">Teepo</nav> 
     <nav class="navbar">Board</nav>
     <div class="listas">
-    	<%String link = "home.jsp"; %>
     	<div class="cria-categoria">
-	    	<form:form method="POST action="/FlowerLiu/criaCategoria">
+	    	<!--  <form method="POST" action="/FlowerLiu/criaCategoria">
 		   		<h3>Titulo da Categoria: <input type='text' name='tituloCategoria'></h3>
-		   		<a href=<%=link %>><button type="submit">Criar Categoria</button></a>
-		   	</form>
+		   		<a href=><button type="submit">Criar Categoria</button></a>
+		   	</form>-->
     	</div>
         
         <%
-           			DAO dao = new DAO();
-           			List<Categorias> categorias = dao.getCategorias();
+           			CategoriasDAO dao = new CategoriasDAO();
+        			NotasDAO ndao = new NotasDAO();
+           			List<Categoria> categorias = dao.getCategorias();
            			           			
            			if (categorias != null){
            				           			
-           			for (Categorias categ: categorias){
-           				List<Notas> notas = dao.notasCategoria(categ);
+           			for (Categoria categ: categorias){
+           				List<Nota> notas = ndao.notasCategoria(categ);
            				String IdCategoria = categ.getIdCategoria().toString();
            				           			
            %>
@@ -38,7 +38,7 @@
            			<ul>
            			<% 
            				
-	           			for (Notas nota: notas){
+	           			for (Nota nota: notas){
 	       					String IdNota = nota.getIdNota().toString();
 	   						
            			%>

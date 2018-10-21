@@ -19,14 +19,15 @@
             </div>
            <!-- AQUI TEM QUE TER O RETURN DAS CATEGORIAS COM TABELAS-->
            <%
-           			DAO dao = new DAO();
-           			List<Categorias> categorias = dao.getCategorias();
+          			CategoriasDAO dao = new CategoriasDAO();
+					NotasDAO ndao = new NotasDAO();
+           			List<Categoria> categorias = dao.getCategorias();
            			String link,linkNota;
            			
            			if (categorias != null){
            				           			
-           			for (Categorias categ: categorias){
-           				List<Notas> notas = dao.notasCategoria(categ);
+           			for (Categoria categ: categorias){
+           				List<Nota> notas = ndao.notasCategoria(categ);
            				String IdCategoria = categ.getIdCategoria().toString();
            				link = "home.jsp?categ_id=";
            				link += categ.getIdCategoria();
@@ -35,7 +36,7 @@
            <div class="lista">
            		<header><%=categ.getTitulo()%></header>
            			<% 
-	           			for (Notas nota: notas){
+	           			for (Nota nota: notas){
 	       					String IdNota = nota.getIdNota().toString();
 	       					link += "?nota_id=" + nota.getIdNota();
            			%>

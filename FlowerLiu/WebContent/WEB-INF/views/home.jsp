@@ -9,36 +9,37 @@
     </head>
     <body>
     	<%@ page import="java.util.*,mvc.model.*,mvc.controller.*"%>
-    	<% String linkCategoria = "criaCategoria.jsp";%>
         <div class="init">
         <nav class="navbar">Teeppo</nav> 
         <nav class="navbar board">Board</nav>   
         <div class="listas">
         	<div class="lista">
-                <a href=<%=linkCategoria%>><button>Criar Categoria</button></a>
+                <a href="criaCategoria">><button>Criar Categoria</button></a>
+                <form action="ProcuraNota">
+	                <input type="text" name="BuscaNota" placeholder="Search..">
+					<a href="procura.jsp"><button>Pesquisar</button></a>
+				</form>
             </div>
-           <!-- AQUI TEM QUE TER O RETURN DAS CATEGORIAS COM TABELAS-->
            <%
            			CategoriasDAO dao = new CategoriasDAO();
 					NotasDAO ndao = new NotasDAO();
-           			List<Categoria> categorias = dao.getCategorias();
-           			String link;
+  					List<Categoria> categorias = dao.getCategorias();
+           			String link,linkNota;
            			
            			if (categorias != null){
            				           			
            			for (Categoria categ: categorias){
-           				String IdCategoria = categ.getIdCategoria().toString();
            				List<Nota> notas = ndao.notasCategoria(categ);
+           				String IdCategoria = categ.getIdCategoria().toString();
            				link = "editCateg.jsp?categ_id=";
            				link += categ.getIdCategoria();
            			
            %>
            <div class="lista">
            		<header><%=categ.getTitulo()%></header>
-           			<% 
+           		    <% 
            				for (Nota nota: notas){
 	       					String IdNota = nota.getIdNota().toString();
-	   						
            			%>
            			<ul>
            				<li>
@@ -46,40 +47,44 @@
            					<br>
            					<div style="display: inline-block">
 			           			<div style="display: inline-block">
-           							<a href="editaNota.jsp"><button>Editar Nota</button></a>
+           							<a href="editaNota"><button>Editar Nota</button></a>
         						</div>
            					</div>
            					<div style="display: inline-block">
 	           					<form action="RemoveNota">
 				           			<input type="hidden" name="IdNota" value="<%=IdNota%>">
 				           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
-				           			<button type="submit">Excluir Nota</button>
+				           			<a href="deletaNota"><button type="submit">Excluir Nota</button></a>
 				           		</form>
 				           	</div>
            				</li>
-           				
-           			<% } %>
            			</ul>
-           		<footer>Adicionar Nota...</footer>
+           		<footer><%=nota.getDataUpdate() %></footer>
+           		<% } %>
            		<br>
-           		<div style="display: inline-block">
-	           		<form action="RemoveCategoria2">
-	           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
-	           			<button type="submit">Deletar Categoria</button>
-	           		</form>
-	           	</div>
-	           	<br>
-	           	<div style="display: inline-block">
-	           		<form action="EditaCategoria">
-	           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
-	           			<input type="text" name="TituloCategoria">
-	           			<button>Confirmar</button>
-	           		</form>
-	           	</div>
+           		<div class="container">
+           			<div style="display: inline-block">
+           				<a href="criaNota"><button type="submit">Criar Nota</button></a>
+           			</div>
+           		</div>
+           		
+           		<br>
+           		<div class="container">
+           			<div style="display: inline-block">
+	           			<form action="RemoveCategoria2">
+	           				<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
+	           				<a href="deletaCategoria"><button type="submit">Deletar Categoria</button></a>
+	           			</form>
+           			</div>
+           			<div style="display: inline-block">
+           				<a href="editaCategoria.jsp"><button>Editar Categoria</button></a>
+        			</div>
+        		</div>
            </div>
            <% }
            			}%>
         </div>
     	</div>
+    	
     </body>
 </html>

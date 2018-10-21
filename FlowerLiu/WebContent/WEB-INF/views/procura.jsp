@@ -16,24 +16,25 @@
     <nav class="navbar">Teeppo</nav> 
     <nav class="navbar board">Board</nav>
     <div class="listas">
-    	<a href="home.jsp"><button>Home</button></a>
+    	<a href="execute"><button>Home</button></a>
 			<%
-				DAO dao = new DAO();
+				CategoriasDAO dao = new CategoriasDAO();
+				NotasDAO ndao = new NotasDAO();
 			
-				List<Categorias> categorias = dao.getCategorias();
+				List<Categoria> categorias = dao.getCategorias();
 				String busca = request.getParameter("BuscaNota");
-				List<Notas> notasProcura = dao.procuraNota(busca);
+				List<Nota> notasProcura = ndao.procuraNota(busca);
 				
 				System.out.println("Buscou no link");
 				
-				for(Notas notaa: notasProcura){	
+				for(Nota notaa: notasProcura){	
 					System.out.println(notaa.getConteudo());
 					System.out.println("Não rodou ainda o getCategoriaFromID");
 					System.out.println(notaa.getIdCategoria());
-					Categorias catego = dao.getCategoriaFromId(notaa.getIdCategoria());
+					Categoria catego = dao.getCategoriaFromId(notaa.getIdCategoria());
 					System.out.println("Rodou o getCategoriaFromID");
-					for (Categorias categ: categorias){
-						List<Notas> notas = dao.notasCategoria(categ);
+					for (Categoria categ: categorias){
+						List<Nota> notas = ndao.notasCategoria(categ);
 						String IdCategoria = categ.getIdCategoria().toString();
 						System.out.println("Uma categoria entre todas");
 						System.out.println(catego.getTitulo());
@@ -46,7 +47,7 @@
 			%>
 		<div class="lista">
 			<header><%=catego.getTitulo() %></header>
-			<%		for (Notas nota: notas){
+			<%		for (Nota nota: notas){
 						if(notaa.getIdNota()==nota.getIdNota()){%>
 			<ul>
 				<li><%=nota.getConteudo() %>
