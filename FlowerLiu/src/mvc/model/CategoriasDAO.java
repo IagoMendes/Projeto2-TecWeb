@@ -101,6 +101,15 @@ public class CategoriasDAO {
 		return buscaCategorias;	
 	}
 	
+	public void removeTodasNotas(Integer idCategoria) {
+		try {
+			PreparedStatement stmt = connection.prepareStatement("DELETE FROM notas WHERE idCategoria=?");
+			stmt.setLong(1, idCategoria);
+			stmt.execute();
+			stmt.close();
+		} catch(SQLException e) {System.out.println(e);}
+	}
+	
 	public void close() {
 		try { connection.close();}
 		catch (SQLException e) {e.printStackTrace();}
