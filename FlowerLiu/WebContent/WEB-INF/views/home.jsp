@@ -20,20 +20,23 @@
         <nav class="navbar board">Board</nav>   
         <div class="listas">
         	<div class="lista">
+        			<% CategoriaController cat = new CategoriaController();
+           			Integer temp = cat.apiTempo();%>
         			<h3>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h3>
                 	<a><button onclick="criaCategoria()">Criar Categoria</button></a>	
                 <form action="ProcuraNota" method="post">
 	                <input type="text" name="BuscaNota" placeholder="Search..">
 					<a href="procura"><button>Pesquisar</button></a>
+					<h5>Temperatura de <%=temp %> ºC em São Paulo</h5>
 				</form>
+					
             </div>
            <%
            			CategoriasDAO dao = new CategoriasDAO();
 					NotasDAO ndao = new NotasDAO();
-					CategoriaController cat = new CategoriaController();
   					List<Categoria> categorias = dao.getCategorias();
            			String link,linkNota;
-           			Integer temp = cat.apiTempo();
+           			
            			if (categorias != null){
            				           			
            			for (Categoria categ: categorias){
@@ -117,6 +120,7 @@
 			method: 'POST',
 			body: JSON.stringify(data)
 		})
+		document.location.reload(true)
 	}
     function criaCategoria() {
 		let tituloCategoria = document.getElementById("tituloCategoria").value
@@ -143,6 +147,7 @@
 			method: 'DELETE',
 			body: JSON.stringify(data)
 		})
+		document.location.reload(true)
 	}
     function deletaCategoria() {
 		let idCategoria = document.getElementById("IdCategoria").value
@@ -170,6 +175,7 @@
 			method: 'PUT',
 			body: JSON.stringify(data)
 		})
+		document.location.reload(true)
 	}
     function editaNota() {
 		let idCategoria = document.getElementById("IdCategoria").value
@@ -185,6 +191,7 @@
 			method: 'PUT',
 			body: JSON.stringify(data)
 		})
+		document.location.reload(true)
 	}
     function postaTweet(){
     	let conteudoNota = document.getElementById("conteudoNotaT").value

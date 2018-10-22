@@ -167,7 +167,10 @@ public class CategoriaController {
 	}
 	
 	public void twitterApi(String tweet) {
-		
+		String consumerKey = "D3DhvhkWp2WsmcVtdBcxQTonw";
+	    String consumerSecret = "J3piyE7WhVLyl7ly6EedIcSq6BNKBzJRfqufEyDZ9VxvnQg8tr";
+	    String accessToken = "2490417132-lRk3LxifsQQLA2Rrl4gatxAoMLZDbbBKTLFzOwT";
+	    String accessSecret = "1KouJV2MAZgvetqaQ7hpCWUbBcLnYCftfPrNVMPgwgunq";
 
 	    ConfigurationBuilder cb = new ConfigurationBuilder();
 	    cb.setDebugEnabled(true)
