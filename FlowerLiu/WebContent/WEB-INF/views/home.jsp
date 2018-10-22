@@ -21,7 +21,7 @@
         <div class="listas">
         	<div class="lista">
         			<h3>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h3>
-                	<button onclick="criaCategoria()">Criar Categoria</button>
+                	<a href="javascript:history.go(0)"><button onclick="criaCategoria()">Criar Categoria</button></a>	
                 <form action="ProcuraNota" method="post">
 	                <input type="text" name="BuscaNota" placeholder="Search..">
 					<a href="procura"><button>Pesquisar</button></a>
@@ -55,6 +55,9 @@
            					<br>
            					<div style="display: inline-block">
 			           			<div style="display: inline-block">
+			           				<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
+			           				<input type="hidden" id="IdNota" name="IdNota" value="<%=IdNota%>"/>
+           							<input type="text" id="conteudoNota" name="conteudoNota">
            							<button onclick="editaNota()">Editar Nota</button>
         						</div>
            					</div>
@@ -84,7 +87,7 @@
            			</div>
            			<div style="display: inline-block">
            				<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
-           				<input type="text" id="tituloCategoria" name="tituloCategoria">
+           				<input type="text" id="editaCategoria" name="editaCategoria" >
            				<button onclick="editaCategoria()">Editar Categoria</button>
         			</div>
         		</div>
@@ -119,6 +122,8 @@
 			method: 'POST',
 			body: JSON.stringify(data)
 		})
+		document.location.reload(true)
+
 	}
     function deletaNota() {
 		let idCategoria = document.getElementById("IdCategoria").value
@@ -143,10 +148,13 @@
 			method: 'DELETE',
 			body: JSON.stringify(data)
 		})
+		window.location.href=window.location.href
+
 	}
     function editaCategoria() {
 		let idCategoria = document.getElementById("IdCategoria").value
-		let tituloCategoria = document.getElementById("tituloCategoria").value
+		let tituloCategoria = document.getElementById("editaCategoria").value
+		console.log(tituloCategoria)
 		data = {
 			'idCategoria': idCategoria,
 			'tituloCategoria': tituloCategoria
@@ -160,7 +168,7 @@
     function editaNota() {
 		let idCategoria = document.getElementById("IdCategoria").value
 		let idNota = document.getElementById("IdNota").value
-		let conteudoNota = document.getElementById("ConteudoNota").value
+		let conteudoNota = document.getElementById("conteudoNota").value
 		data = {
 			'idCategoria': idCategoria,
 			'conteudoNota': conteudoNota,

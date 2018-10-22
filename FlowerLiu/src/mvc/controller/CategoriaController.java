@@ -29,11 +29,6 @@ public class CategoriaController {
 	 public String home(HttpServletRequest request, HttpServletResponse response) {
 		return "home";
 	}
-//	@RequestMapping(value = "/categoria", method = RequestMethod.GET)
-//	@ResponseBody
-//	 public String categoria(@RequestBody String rawJson) {
-//		return "editaCategoria";
-//	}
 	@RequestMapping(value = "/categoria", method = RequestMethod.POST)
 	 public @ResponseBody String criaCategoria(@RequestBody String rawJson) {
 		System.out.println("CRIO");
@@ -43,7 +38,7 @@ public class CategoriaController {
 		categoria.setTitulo(parsedJson.getString("tituloCategoria"));
 		dao.adicionaCategoria(categoria);
 		dao.close();
-		return "home";
+		return "criaCategoria";
 	}
 	@RequestMapping(value = "/categoria", method = RequestMethod.DELETE)
 	@ResponseBody
@@ -56,6 +51,7 @@ public class CategoriaController {
 		dao.removeCategoria(idCategoria);
 		dao.removeTodasNotas(idCategoria);
 		dao.close();
+		System.out.println(parsedJson.getString("idCategoria")); 	
 		return "home";
 		
 	}
@@ -71,7 +67,7 @@ public class CategoriaController {
 		categoria.setTitulo(parsedJson.getString("tituloCategoria"));
 		dao.alteraCategoria(categoria);
 		dao.close();
-		return "editaCategoria";
+		return "home";
 	}
 	@RequestMapping(value = "/nota", method = RequestMethod.POST)
 	@ResponseBody
@@ -110,7 +106,7 @@ public class CategoriaController {
 	 public String editaNota(@RequestBody String rawJson,HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("EDITO");
 		JSONObject parsedJson = new JSONObject(rawJson);
-		Integer idCateg = Integer.parseInt(parsedJson.getString("idCateogira"));
+		Integer idCateg = Integer.parseInt(parsedJson.getString("idCategoria"));
 		Integer idNota = Integer.parseInt(parsedJson.getString("idNota"));
 		NotasDAO dao = new NotasDAO();
 		Nota nota = new Nota();
@@ -120,7 +116,7 @@ public class CategoriaController {
 		dao.alteraNota(nota);
 		dao.close();
 		request.setAttribute("idCategoria", idCateg);		
-		return "editaNota";
+		return "home";
 	}
 	@RequestMapping(value="/procura", method = RequestMethod.GET)
 	@ResponseBody
