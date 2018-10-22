@@ -105,16 +105,17 @@ public class CategoriaController {
 	 public String deletaNota(
 			 @RequestBody String rawJson,
 			 HttpServletRequest request, 
-			 HttpServletResponse response) {
+			 HttpServletResponse response) throws IOException {
 		System.out.println("DELETO NOTA");
 		JSONObject parsedJson = new JSONObject(rawJson);
 		System.out.println(parsedJson.getString("idNota"));
 		Integer idCateg = Integer.parseInt(parsedJson.getString("idCategoria"));
 		Integer idNota = Integer.parseInt(parsedJson.getString("idNota"));
 		NotasDAO dao = new NotasDAO();
-		dao.removeNota(idNota);
+		dao.removeNota(idNota); 	
 		dao.close();
 		request.setAttribute("IdCategoria", idCateg);
+//		response.sendRedirect("home.jsp");
 		return "home";
 		
 	}
@@ -166,10 +167,7 @@ public class CategoriaController {
 	}
 	
 	public void twitterApi(String tweet) {
-		String consumerKey = "D3DhvhkWp2WsmcVtdBcxQTonw";
-	    String consumerSecret = "J3piyE7WhVLyl7ly6EedIcSq6BNKBzJRfqufEyDZ9VxvnQg8tr";
-	    String accessToken = "2490417132-lRk3LxifsQQLA2Rrl4gatxAoMLZDbbBKTLFzOwT";
-	    String accessSecret = "1KouJV2MAZgvetqaQ7hpCWUbBcLnYCftfPrNVMPgwgunq";
+		
 
 	    ConfigurationBuilder cb = new ConfigurationBuilder();
 	    cb.setDebugEnabled(true)

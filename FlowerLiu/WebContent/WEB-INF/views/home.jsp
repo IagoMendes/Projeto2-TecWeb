@@ -30,9 +30,10 @@
            <%
            			CategoriasDAO dao = new CategoriasDAO();
 					NotasDAO ndao = new NotasDAO();
+					CategoriaController cat = new CategoriaController();
   					List<Categoria> categorias = dao.getCategorias();
            			String link,linkNota;
-           			
+           			Integer temp = cat.apiTempo();
            			if (categorias != null){
            				           			
            			for (Categoria categ: categorias){
