@@ -5,9 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,12 @@ import mvc.model.Categoria;
 import mvc.model.CategoriasDAO;
 import mvc.model.Nota;
 import mvc.model.NotasDAO;
+
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 @Controller
 public class CategoriaController {
@@ -122,5 +131,51 @@ public class CategoriaController {
 	@ResponseBody
 	 public String procura(@RequestBody String rawJson){
 		return "procura";
+	}
+	
+	public Integer apiTempo() throws IOException {
+		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id=3448439&APPID=bcba6ed7db41f9f8f0fec131c856009e");
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		int responsecode = conn.getResponseCode(); 
+		String inline = "";
+		if(responsecode != 200) {
+			throw new RuntimeException("HttpResponseCode: "+responsecode);}
+			else{
+				Scanner sc = new Scanner(url.openStream());
+				while(sc.hasNext())	{
+				inline+=sc.nextLine();
+				}
+			sc.close();
+			
+			JSONObject parsedJson = new JSONObject(inline);
+			JSONObject main = (JSONObject) parsedJson.get("main");
+			Integer temperatura = main.getInt("temp") - 273;
+			System.out.println(temperatura);
+			return temperatura;
+			}
+	}
+	
+	public static void main(String[] args) {
+		String consumerKey = "D3DhvhkWp2WsmcVtdBcxQTonw";
+	    String consumerSecret = "J3piyE7WhVLyl7ly6EedIcSq6BNKBzJRfqufEyDZ9VxvnQg8tr";
+	    String accessToken = "2490417132-lRk3LxifsQQLA2Rrl4gatxAoMLZDbbBKTLFzOwT";
+	    String accessSecret = "1KouJV2MAZgvetqaQ7hpCWUbBcLnYCftfPrNVMPgwgunq";
+
+	    ConfigurationBuilder cb = new ConfigurationBuilder();
+	    cb.setDebugEnabled(true)
+	      .setOAuthConsumerKey(consumerKey)
+	      .setOAuthConsumerSecret(consumerSecret)
+	      .setOAuthAccessToken(accessToken)
+	      .setOAuthAccessTokenSecret(accessSecret);
+	    TwitterFactory tf = new TwitterFactory(cb.build());
+	    Twitter twitter = tf.getInstance();   
+		try {
+			Status status = twitter.updateStatus("lala land é ruim");
+			System.out.println("Successfully updated the status to [" + status.getText() + "].");
+		} catch (TwitterException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
