@@ -139,6 +139,8 @@ public class CategoriaController {
 	@RequestMapping(value="/procura", method = RequestMethod.GET)
 	@ResponseBody
 	 public String procura(@RequestBody String rawJson){
+		JSONObject parsedJson = new JSONObject(rawJson);
+		String conteudoPesquisa = parsedJson.getString("conteudoPesquisa");
 		return "procura";
 	}
 	

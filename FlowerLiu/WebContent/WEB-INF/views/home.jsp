@@ -22,11 +22,11 @@
         	<div class="lista">
         			<% CategoriaController cat = new CategoriaController();
            			Integer temp = cat.apiTempo();%>
-        			<h3>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h3>
+        			<h4>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h4	>
                 	<a><button onclick="criaCategoria()">Criar Categoria</button></a>	
-                <form action="ProcuraNota" method="post">
-	                <input type="text" name="BuscaNota" placeholder="Search..">
-					<a href="procura"><button>Pesquisar</button></a>
+                <form action="procura" method="get">
+	                <input type="text" id="conteudoPesquisa" name="conteudoPesquisa" placeholder="Search..">
+					<a><button onclick="pesquisa()">Pesquisar</button></a>
 					<h5>Temperatura de <%=temp %> ºC em São Paulo</h5>
 				</form>
 					
@@ -52,6 +52,7 @@
            		    <% 
            				for (Nota nota: notas){
 	       					String IdNota = nota.getIdNota().toString();
+	       					
            			%>
            			<ul>
            				<li>
@@ -66,8 +67,8 @@
         						</div>
            					</div>
            					<div style="display: inline-block">
-				           			<input type="hidden" id="IdNota" name="IdNota" value="<%=IdNota%>">
-				           			<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria%>">
+				           			<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
+			           				<input type="hidden" id="IdNota" name="IdNota" value="<%=IdNota%>"/>
 				           			<button onclick="deletaNota()">Excluir Nota</button>
 				           	</div>
 				           	<div style="display: inline-block">
@@ -120,7 +121,7 @@
 			method: 'POST',
 			body: JSON.stringify(data)
 		})
-		document.location.reload(true)
+		document.location.reload()
 	}
     function criaCategoria() {
 		let tituloCategoria = document.getElementById("tituloCategoria").value
@@ -132,7 +133,7 @@
 			method: 'POST',
 			body: JSON.stringify(data)
 		})
-		document.location.reload(true)
+		document.location.reload()
 
 	}
     function deletaNota() {
@@ -147,7 +148,7 @@
 			method: 'DELETE',
 			body: JSON.stringify(data)
 		})
-		document.location.reload(true)
+		document.location.reload()
 	}
     function deletaCategoria() {
 		let idCategoria = document.getElementById("IdCategoria").value
@@ -159,7 +160,7 @@
 			method: 'DELETE',
 			body: JSON.stringify(data)
 		})
-		window.location.href=window.location.href
+		document.location.reload()
 
 	}
     function editaCategoria() {
@@ -175,7 +176,7 @@
 			method: 'PUT',
 			body: JSON.stringify(data)
 		})
-		document.location.reload(true)
+		document.location.reload()
 	}
     function editaNota() {
 		let idCategoria = document.getElementById("IdCategoria").value
@@ -191,7 +192,7 @@
 			method: 'PUT',
 			body: JSON.stringify(data)
 		})
-		document.location.reload(true)
+		document.location.reload()
 	}
     function postaTweet(){
     	let conteudoNota = document.getElementById("conteudoNotaT").value
@@ -202,6 +203,16 @@
 			method: 'POST',
 			body: JSON.stringify(data)
 		})
+    }
+    function pesquisa(){
+    	let conteudoPesquisa = document.getElementById("").value
+    	data = {
+    		'conteudoPesquisa': conteudoPesquisa
+    	}
+    	fetch('/FlowerLiu/procura'{
+    		method: 'GET'
+    		body: JSON.stringify(data)
+    	})
     }
     </script>
 </html>
