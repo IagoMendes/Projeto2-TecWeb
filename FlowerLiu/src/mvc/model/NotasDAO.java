@@ -8,7 +8,7 @@ public class NotasDAO {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost/teepo","root", "Mendez575");
+					"jdbc:mysql://localhost/teepo","root", "Certezajorge123");
 		} catch (SQLException | ClassNotFoundException e){
 			e.printStackTrace();
 		}

@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
         <title>TecWeb- Projeto 1</title>
-        <link rel="stylesheet" type="text/css" href="settings.css">
+        <spring:url value="/resources/settings.css" var="mainCss" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<spring:url value="/resources/settings.js" var="mainJs" />
+	
+		<link href="${mainCss}" rel="stylesheet" />
+  		<script src="${mainJs}"></script>
     </head>
     <body>
     	<%@ page import="java.util.*,mvc.model.*,mvc.controller.*"%>
@@ -15,11 +21,12 @@
         <div class="listas">
         	<div class="lista">
         		<form action = "criaCategoria" method="post">
-                	<a href="criaCategoria"><button>Criar Categoria</button></a>
+        			<h3>Titulo da Categoria: <input type='text' name='tituloCategoria'></h3>
+                	<a href="home"><button>Criar Categoria</button></a>
                 </form>
                 <form action="ProcuraNota" method="post">
 	                <input type="text" name="BuscaNota" placeholder="Search..">
-					<a href="procura.jsp"><button>Pesquisar</button></a>
+					<a href="home"><button>Pesquisar</button></a>
 				</form>
             </div>
            <%
@@ -32,8 +39,9 @@
            				           			
            			for (Categoria categ: categorias){
            				List<Nota> notas = ndao.notasCategoria(categ);
+           				System.out.println(categ.getIdCategoria());
            				String IdCategoria = categ.getIdCategoria().toString();
-           				link = "editCateg.jsp?categ_id=";
+           				link = "editaCategoria?categ_id=";
            				link += categ.getIdCategoria();
            			
            %>
@@ -53,7 +61,7 @@
         						</div>
            					</div>
            					<div style="display: inline-block">
-	           					<form action="RemoveNota" method="post">
+	           					<form action="deletaNota" method="post">
 				           			<input type="hidden" name="IdNota" value="<%=IdNota%>">
 				           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
 				           			<a href="deletaNota"><button type="submit">Excluir Nota</button></a>
@@ -66,16 +74,20 @@
            		<br>
            		<div class="container">
            			<div style="display: inline-block">
-           				<a href="criaNota"><button type="submit">Criar Nota</button></a>
+           				<form action = "criaNota" method="post">
+				           	<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
+                			<a href="criaNota"><button type="submit">Criar Nota</button></a>
+                		</form>
+           				
            			</div>
            		</div>
            		
            		<br>
            		<div class="container">
            			<div style="display: inline-block">
-	           			<form action="RemoveCategoria2" method="post">
+	           			<form action="deletaCategoria" method="delete">
 	           				<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
-	           				<a href="deletaCategoria"><button type="submit">Deletar Categoria</button></a>
+	           				<a href="home"><button type="submit">Deletar Categoria</button></a>
 	           			</form>
            			</div>
            			<div style="display: inline-block">

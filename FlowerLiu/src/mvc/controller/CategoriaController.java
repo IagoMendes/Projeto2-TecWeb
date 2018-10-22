@@ -34,16 +34,17 @@ public class CategoriaController {
 		categoria.setTitulo(request.getParameter("tituloCategoria"));
 		dao.adicionaCategoria(categoria);
 		dao.close();
-		return "criaCategoria";
+		return "home";
 	}
 	@RequestMapping(value = "/deletaCategoria", method = RequestMethod.DELETE)
-	 public void deletaCategoria(HttpServletRequest request, HttpServletResponse response) {
+	 public String deletaCategoria(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("DELETO");
 		Integer idCategoria = Integer.parseInt(request.getParameter("IdCategoria"));
 		CategoriasDAO dao = new CategoriasDAO();
 		dao.removeCategoria(idCategoria);
 		dao.removeTodasNotas(idCategoria);
 		dao.close();
+		return "home";
 	}
 	@RequestMapping(value = "/editaCategoria", method = RequestMethod.PUT)
 	 public String editaCategoria(HttpServletRequest request, HttpServletResponse response) {
@@ -59,7 +60,7 @@ public class CategoriaController {
 	}
 	@RequestMapping(value = "/criaNota", method = RequestMethod.POST)
 	 public String criaNota(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("CRIO");
+		System.out.println("CRIO NOTA");
 		Integer idCategoria = Integer.parseInt(request.getParameter("IdCategoria"));
 		NotasDAO dao = new NotasDAO();		 
 		Nota nota = new Nota();
@@ -67,7 +68,7 @@ public class CategoriaController {
 		nota.setIdCategoria(idCategoria);
 		dao.adicionaNota(nota, idCategoria);
 		dao.close();
-		return "criaNota";
+		return "home";
 	}
 	@RequestMapping(value = "/deletaNota", method = RequestMethod.DELETE)
 	 public void deletaNota(HttpServletRequest request, HttpServletResponse response) {

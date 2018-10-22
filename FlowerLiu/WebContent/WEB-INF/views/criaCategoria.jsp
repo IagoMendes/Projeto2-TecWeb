@@ -24,7 +24,7 @@
     	<div class="cria-categoria">
 	        <form method="post" action="criaCategoria">
 		   		<h3>Titulo da Categoria: <input type='text' name='tituloCategoria'></h3>
-		   		<a href="criaCategoria"><button type="submit">Criar Categoria</button></a>
+		   		<a href="home"><button type="submit">Criar Categoria</button></a>
 		   	</form>
     	</div>
         
