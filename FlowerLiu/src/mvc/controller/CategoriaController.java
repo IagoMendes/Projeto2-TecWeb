@@ -157,7 +157,7 @@ public class CategoriaController {
 			}
 	}
 	
-	public static void main(String[] args) {
+	public void twitterApi(String tweet) {
 		String consumerKey = "D3DhvhkWp2WsmcVtdBcxQTonw";
 	    String consumerSecret = "J3piyE7WhVLyl7ly6EedIcSq6BNKBzJRfqufEyDZ9VxvnQg8tr";
 	    String accessToken = "2490417132-lRk3LxifsQQLA2Rrl4gatxAoMLZDbbBKTLFzOwT";
@@ -172,7 +172,7 @@ public class CategoriaController {
 	    TwitterFactory tf = new TwitterFactory(cb.build());
 	    Twitter twitter = tf.getInstance();   
 		try {
-			Status status = twitter.updateStatus("lala land é ruim");
+			Status status = twitter.updateStatus(tweet);
 			System.out.println("Successfully updated the status to [" + status.getText() + "].");
 		} catch (TwitterException e1) {
 			e1.printStackTrace();
