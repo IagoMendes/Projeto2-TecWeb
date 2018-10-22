@@ -53,17 +53,27 @@ public class CategoriaController {
 		return "home";
 		
 	}
-	@RequestMapping(value = "/editaCategoria", method = RequestMethod.PUT)
-	 public String editaCategoria(HttpServletRequest request, HttpServletResponse response) {
+//	@RequestMapping(value = "/editaCategoria", method = RequestMethod.POST)
+//	@ResponseBody
+//	 public String nodale() {
+//		System.out.println("EDITO");
+//		return "editaCategoria";
+//	}
+	@RequestMapping(value = "/home", method = RequestMethod.PUT)
+	@ResponseBody
+	 public String editaCategoria(@RequestBody String rawJson) {
 		System.out.println("EDITO");
-		Integer idCategoria = Integer.parseInt(request.getParameter("IdCategoria"));
+		JSONObject parsedJson = new JSONObject(rawJson);
+		Integer idCategoria = Integer.parseInt(parsedJson.getString("idCategoria"));
 		CategoriasDAO dao = new CategoriasDAO();
 		Categoria categoria = new Categoria();
+		//System.out.println(idCategoria);
+		//System.out.println(parsedJson.getString("tituloCategoria"));
 		categoria.setIdCategoria(idCategoria);
-		categoria.setTitulo(request.getParameter("TituloCategoria"));
+		categoria.setTitulo(parsedJson.getString("tituloCategoria"));
 		dao.alteraCategoria(categoria);
 		dao.close();
-		return "editaCategoria";
+		return "home";
 	}
 	@RequestMapping(value = "/criaNota", method = RequestMethod.POST)
 	 public String criaNota(HttpServletRequest request, HttpServletResponse response) {
@@ -77,15 +87,22 @@ public class CategoriaController {
 		dao.close();
 		return "home";
 	}
-	@RequestMapping(value = "/deletaNota", method = RequestMethod.DELETE)
-	 public void deletaNota(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("DELETO");
-		Integer idCateg = Integer.parseInt(request.getParameter("IdCategoria"));
-		Integer idNota = Integer.parseInt(request.getParameter("IdNota"));
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	@ResponseBody
+	 public String deletaNota(
+			 @RequestBody String rawJson,
+			 HttpServletRequest request, 
+			 HttpServletResponse response) {
+		System.out.println("DELETO NOTA");
+		JSONObject parsedJson = new JSONObject(rawJson);
+		System.out.println(parsedJson.getString("idNota"));
+		Integer idCateg = Integer.parseInt(parsedJson.getString("idCategoria"));
+		Integer idNota = Integer.parseInt(parsedJson.getString("idNota"));
 		NotasDAO dao = new NotasDAO();
 		dao.removeNota(idNota);
 		dao.close();
 		request.setAttribute("IdCategoria", idCateg);
+		return "home";
 		
 	}
 	@RequestMapping(value = "/editaNota", method = RequestMethod.PUT)

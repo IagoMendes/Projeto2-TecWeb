@@ -15,13 +15,12 @@
     </head>
     <body>
     	<%@ page import="java.util.*,mvc.model.*,mvc.controller.*"%>
-    	<% String linkCategoria = "criaCategoria.jsp";%>
         <div class="init">
         <nav class="navbar">Teeppo</nav> 
         <nav class="navbar board">Board</nav>   
         <div class="listas">
         	<div class="lista">
-                <a href=<%=linkCategoria%>><button>Criar Categoria</button></a>
+                <a href="home"><button>Criar Categoria</button></a>
             </div>
            <!-- AQUI TEM QUE TER O RETURN DAS CATEGORIAS COM TABELAS-->
            <%
@@ -76,11 +75,9 @@
 	           	</div>
 	           	<br>
 	           	<div style="display: inline-block">
-	           		<form action="EditaCategoria">
 	           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
 	           			<input type="text" name="TituloCategoria">
-	           			<button>Confirmar</button>
-	           		</form>
+	           			<button onclick="editaCateogira">Confirmar</button>
 	           	</div>
            </div>
            <% }
@@ -88,4 +85,19 @@
         </div>
     	</div>
     </body>
+    <script>
+    function editaCategoria() {
+		let idCategoria = document.getElementById("IdCategoria").value
+		let tituloCategoria = document.getElementById("tituloCategoria").value
+		data = {
+			'idCategoria': idCategoria,
+			'tituloCategoria': tituloCategoria
+		}
+		
+		fetch('/FlowerLiu/editaCategoria', {
+			method: 'PUT',
+			body: JSON.stringify(data)
+		})
+	}
+    </script>
 </html>

@@ -61,11 +61,9 @@
         						</div>
            					</div>
            					<div style="display: inline-block">
-	           					<form action="deletaNota" method="post">
-				           			<input type="hidden" name="IdNota" value="<%=IdNota%>">
-				           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
-				           			<a href="deletaNota"><button type="submit">Excluir Nota</button></a>
-				           		</form>
+				           			<input type="hidden" id="IdNota" name="IdNota" value="<%=IdNota%>">
+				           			<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria%>">
+				           			<a href="home"><button onclick="deletaNota()">Excluir Nota</button></a>
 				           	</div>
            				</li>
            			</ul>
@@ -76,6 +74,7 @@
            			<div style="display: inline-block">
            				<form action = "criaNota" method="post">
 				           	<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
+				           	<input type="text" id="conteudoNota" name="conteudoNota">
                 			<a href="criaNota"><button type="submit">Criar Nota</button></a>
                 		</form>
            				
@@ -89,7 +88,9 @@
 	           				<a href="home"><button onclick="deletaCategoria()">Deletar Categoria</button></a>
            			</div>
            			<div style="display: inline-block">
-           				<a href="editaCategoria.jsp"><button>Editar Categoria</button></a>
+           				<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
+           				<input type="text" id="tituloCategoria" name="tituloCategoria">
+           				<a href="home"><button onclick="editaCategoria()">Editar Categoria</button></a>
         			</div>
         		</div>
            </div>
@@ -100,6 +101,19 @@
     	
     </body>
     <script type="text/javascript">
+    function deletaNota() {
+		let idCategoria = document.getElementById("IdCategoria").value
+		let idNota = document.getElementById("IdNota").value
+		data = {
+			'idCategoria': idCategoria,
+			'idNota': idNota
+		}
+		
+		fetch('/FlowerLiu/home', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		})
+	}
     function deletaCategoria() {
 		let idCategoria = document.getElementById("IdCategoria").value
 		data = {
@@ -108,6 +122,19 @@
 		
 		fetch('/FlowerLiu/home', {
 			method: 'DELETE',
+			body: JSON.stringify(data)
+		})
+	}
+    function editaCategoria() {
+		let idCategoria = document.getElementById("IdCategoria").value
+		let tituloCategoria = document.getElementById("tituloCategoria").value
+		data = {
+			'idCategoria': idCategoria,
+			'tituloCategoria': tituloCategoria
+		}
+		
+		fetch('/FlowerLiu/home', {
+			method: 'PUT',
 			body: JSON.stringify(data)
 		})
 	}
