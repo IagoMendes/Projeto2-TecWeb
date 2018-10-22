@@ -85,10 +85,8 @@
            		<br>
            		<div class="container">
            			<div style="display: inline-block">
-	           			<form action="deletaCategoria" method="delete">
-	           				<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
-	           				<a href="home"><button type="submit">Deletar Categoria</button></a>
-	           			</form>
+	           				<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
+	           				<a href="home"><button onclick="deletaCategoria()">Deletar Categoria</button></a>
            			</div>
            			<div style="display: inline-block">
            				<a href="editaCategoria.jsp"><button>Editar Categoria</button></a>
@@ -101,4 +99,17 @@
     	</div>
     	
     </body>
+    <script type="text/javascript">
+    function deletaCategoria() {
+		let idCategoria = document.getElementById("IdCategoria").value
+		data = {
+			'idCategoria': idCategoria
+		}
+		
+		fetch('/FlowerLiu/home', {
+			method: 'DELETE',
+			body: JSON.stringify(data)
+		})
+	}
+    </script>
 </html>

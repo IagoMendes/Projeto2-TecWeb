@@ -1,9 +1,12 @@
 package mvc.controller;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam; 
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,15 +39,19 @@ public class CategoriaController {
 		dao.close();
 		return "home";
 	}
-	@RequestMapping(value = "/deletaCategoria", method = RequestMethod.DELETE)
-	 public String deletaCategoria(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/home", method = RequestMethod.DELETE)
+	@ResponseBody
+	 public String deletaCategoria(@RequestBody String rawJson) {
 		System.out.println("DELETO");
-		Integer idCategoria = Integer.parseInt(request.getParameter("IdCategoria"));
+		JSONObject parsedJson = new JSONObject(rawJson);
+		System.out.println(parsedJson.getString("idCategoria"));
+		Integer idCategoria = Integer.parseInt(parsedJson.getString("idCategoria"));
 		CategoriasDAO dao = new CategoriasDAO();
 		dao.removeCategoria(idCategoria);
 		dao.removeTodasNotas(idCategoria);
 		dao.close();
 		return "home";
+		
 	}
 	@RequestMapping(value = "/editaCategoria", method = RequestMethod.PUT)
 	 public String editaCategoria(HttpServletRequest request, HttpServletResponse response) {
