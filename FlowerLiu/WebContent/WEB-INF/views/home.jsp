@@ -20,13 +20,11 @@
         <nav class="navbar board">Board</nav>   
         <div class="listas">
         	<div class="lista">
-        		<form action = "criaCategoria" method="post">
-        			<h3>Titulo da Categoria: <input type='text' name='tituloCategoria'></h3>
-                	<a href="home"><button>Criar Categoria</button></a>
-                </form>
+        			<h3>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h3>
+                	<button onclick="criaCategoria()">Criar Categoria</button>
                 <form action="ProcuraNota" method="post">
 	                <input type="text" name="BuscaNota" placeholder="Search..">
-					<a href="home"><button>Pesquisar</button></a>
+					<a href="procura"><button>Pesquisar</button></a>
 				</form>
             </div>
            <%
@@ -57,13 +55,13 @@
            					<br>
            					<div style="display: inline-block">
 			           			<div style="display: inline-block">
-           							<a href="editaNota"><button>Editar Nota</button></a>
+           							<button onclick="editaNota()">Editar Nota</button>
         						</div>
            					</div>
            					<div style="display: inline-block">
 				           			<input type="hidden" id="IdNota" name="IdNota" value="<%=IdNota%>">
 				           			<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria%>">
-				           			<a href="home"><button onclick="deletaNota()">Excluir Nota</button></a>
+				           			<button onclick="deletaNota()">Excluir Nota</button>
 				           	</div>
            				</li>
            			</ul>
@@ -72,12 +70,9 @@
            		<br>
            		<div class="container">
            			<div style="display: inline-block">
-           				<form action = "criaNota" method="post">
 				           	<input type="hidden" name="IdCategoria" value="<%=IdCategoria%>">
 				           	<input type="text" id="conteudoNota" name="conteudoNota">
-                			<a href="criaNota"><button type="submit">Criar Nota</button></a>
-                		</form>
-           				
+                			<button onclick="criaNota()">Criar Nota</button>
            			</div>
            		</div>
            		
@@ -85,12 +80,12 @@
            		<div class="container">
            			<div style="display: inline-block">
 	           				<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
-	           				<a href="home"><button onclick="deletaCategoria()">Deletar Categoria</button></a>
+	           				<button onclick="deletaCategoria()">Deletar Categoria</button>
            			</div>
            			<div style="display: inline-block">
            				<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria %>"/>
            				<input type="text" id="tituloCategoria" name="tituloCategoria">
-           				<a href="home"><button onclick="editaCategoria()">Editar Categoria</button></a>
+           				<button onclick="editaCategoria()">Editar Categoria</button>
         			</div>
         		</div>
            </div>
@@ -101,6 +96,30 @@
     	
     </body>
     <script type="text/javascript">
+    function criaNota() {
+		let idCategoria = document.getElementById("IdCategoria").value
+		let conteudoNota = document.getElementById("ConteudoNota").value
+		data = {
+			'idCategoria': idCategoria,
+			'conteudoNota': conteudoNota
+		}
+		
+		fetch('/FlowerLiu/nota', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		})
+	}
+    function criaCategoria() {
+		let tituloCategoria = document.getElementById("tituloCategoria").value
+		data = {
+			'tituloCategoria': tituloCategoria
+		}
+		
+		fetch('/FlowerLiu/categoria', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		})
+	}
     function deletaNota() {
 		let idCategoria = document.getElementById("IdCategoria").value
 		let idNota = document.getElementById("IdNota").value
@@ -109,8 +128,8 @@
 			'idNota': idNota
 		}
 		
-		fetch('/FlowerLiu/home', {
-			method: 'POST',
+		fetch('/FlowerLiu/nota', {
+			method: 'DELETE',
 			body: JSON.stringify(data)
 		})
 	}
@@ -120,7 +139,7 @@
 			'idCategoria': idCategoria
 		}
 		
-		fetch('/FlowerLiu/home', {
+		fetch('/FlowerLiu/categoria', {
 			method: 'DELETE',
 			body: JSON.stringify(data)
 		})
@@ -133,7 +152,22 @@
 			'tituloCategoria': tituloCategoria
 		}
 		
-		fetch('/FlowerLiu/home', {
+		fetch('/FlowerLiu/categoria', {
+			method: 'PUT',
+			body: JSON.stringify(data)
+		})
+	}
+    function editaNota() {
+		let idCategoria = document.getElementById("IdCategoria").value
+		let idNota = document.getElementById("IdNota").value
+		let conteudoNota = document.getElementById("ConteudoNota").value
+		data = {
+			'idCategoria': idCategoria,
+			'conteudoNota': conteudoNota,
+			'idNota': idNota
+		}
+		
+		fetch('/FlowerLiu/nota', {
 			method: 'PUT',
 			body: JSON.stringify(data)
 		})

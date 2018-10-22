@@ -77,7 +77,7 @@
 	           	<div style="display: inline-block">
 	           			<input type="hidden" name="IdCategoria" value="<%=IdCategoria %>"/>
 	           			<input type="text" name="TituloCategoria">
-	           			<button onclick="editaCateogira">Confirmar</button>
+	           			<button onclick="editaCategoria()">Confirmar</button>
 	           	</div>
            </div>
            <% }
@@ -94,7 +94,7 @@
 			'tituloCategoria': tituloCategoria
 		}
 		
-		fetch('/FlowerLiu/editaCategoria', {
+		fetch('/FlowerLiu/categoria', {
 			method: 'PUT',
 			body: JSON.stringify(data)
 		})
