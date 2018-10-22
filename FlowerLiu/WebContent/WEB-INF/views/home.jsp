@@ -98,7 +98,7 @@
     <script type="text/javascript">
     function criaNota() {
 		let idCategoria = document.getElementById("IdCategoria").value
-		let conteudoNota = document.getElementById("ConteudoNota").value
+		let conteudoNota = document.getElementById("conteudoNota").value
 		data = {
 			'idCategoria': idCategoria,
 			'conteudoNota': conteudoNota
