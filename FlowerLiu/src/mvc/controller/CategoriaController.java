@@ -38,6 +38,14 @@ public class CategoriaController {
 	 public String home(HttpServletRequest request, HttpServletResponse response) {
 		return "home";
 	}
+	@RequestMapping(value = "/tweet", method = RequestMethod.POST)
+	@ResponseBody
+	 public String tweetar(@RequestBody String rawJson) {
+		System.out.println("Tweet =D");
+		JSONObject parsedJson = new JSONObject(rawJson);
+		twitterApi(parsedJson.getString("conteudoNota"));
+		return "home";
+	}
 	@RequestMapping(value = "/categoria", method = RequestMethod.POST)
 	 public @ResponseBody String criaCategoria(@RequestBody String rawJson) {
 		System.out.println("CRIO");
@@ -47,7 +55,7 @@ public class CategoriaController {
 		categoria.setTitulo(parsedJson.getString("tituloCategoria"));
 		dao.adicionaCategoria(categoria);
 		dao.close();
-		return "criaCategoria";
+		return "home";
 	}
 	@RequestMapping(value = "/categoria", method = RequestMethod.DELETE)
 	@ResponseBody
@@ -170,7 +178,7 @@ public class CategoriaController {
 	      .setOAuthAccessToken(accessToken)
 	      .setOAuthAccessTokenSecret(accessSecret);
 	    TwitterFactory tf = new TwitterFactory(cb.build());
-	    Twitter twitter = tf.getInstance();   
+	    Twitter twitter = tf.getInstance();  
 		try {
 			Status status = twitter.updateStatus(tweet);
 			System.out.println("Successfully updated the status to [" + status.getText() + "].");

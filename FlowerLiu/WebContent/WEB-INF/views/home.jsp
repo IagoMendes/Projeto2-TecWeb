@@ -21,7 +21,7 @@
         <div class="listas">
         	<div class="lista">
         			<h3>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h3>
-                	<a href="javascript:history.go(0)"><button onclick="criaCategoria()">Criar Categoria</button></a>	
+                	<a><button onclick="criaCategoria()">Criar Categoria</button></a>	
                 <form action="ProcuraNota" method="post">
 	                <input type="text" name="BuscaNota" placeholder="Search..">
 					<a href="procura"><button>Pesquisar</button></a>
@@ -66,6 +66,11 @@
 				           			<input type="hidden" id="IdCategoria" name="IdCategoria" value="<%=IdCategoria%>">
 				           			<button onclick="deletaNota()">Excluir Nota</button>
 				           	</div>
+				           	<div style="display: inline-block">
+				           			<input type="hidden" id="conteudoNotaT" value="<%=nota.getConteudo() %>">
+				           			<button onclick="postaTweet()">Tweetar</button>
+				           	</div>
+				           	
            				</li>
            			</ul>
            		<footer><%=nota.getDataUpdate() %></footer>
@@ -180,5 +185,15 @@
 			body: JSON.stringify(data)
 		})
 	}
+    function postaTweet(){
+    	let conteudoNota = document.getElementById("conteudoNotaT").value
+    	data = {
+    		'conteudoNota': conteudoNota
+    	}
+    	fetch('/FlowerLiu/tweet', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		})
+    }
     </script>
 </html>
