@@ -21,11 +21,11 @@
     <nav class="navbar">Teeppo</nav> 
     <nav class="navbar board">Board</nav>
     <div class="listas">
-    	<a href="execute"><button>Home</button></a>
+    	<a href="home"><button>Home</button></a>
 			<%
 				CategoriasDAO dao = new CategoriasDAO();
 				NotasDAO ndao = new NotasDAO();
-			
+				CategoriaController cat = new CategoriaController();
 				List<Categoria> categorias = dao.getCategorias();
 				String busca = request.getParameter("BuscaNota");
 				List<Nota> notasProcura = ndao.procuraNota(busca);

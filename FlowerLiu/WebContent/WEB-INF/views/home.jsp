@@ -23,12 +23,11 @@
         			<% CategoriaController cat = new CategoriaController();
            			Integer temp = cat.apiTempo();%>
         			<h4>Titulo da Categoria: <input type='text' id="tituloCategoria" name='tituloCategoria'></h4	>
-                	<a><button onclick="criaCategoria()">Criar Categoria</button></a>	
-                <form action="procura" method="get">
+                	<a><button onclick="criaCategoria()">Criar Categoria</button></a>
+                	<br>	
 	                <input type="text" id="conteudoPesquisa" name="conteudoPesquisa" placeholder="Search..">
-					<a><button onclick="pesquisa()">Pesquisar</button></a>
+					<a href="procura"><button onclick="pesquisa()">Pesquisar</button></a>
 					<h5>Temperatura de <%=temp %> ºC em São Paulo</h5>
-				</form>
 					
             </div>
            <%
@@ -210,7 +209,7 @@
     		'conteudoPesquisa': conteudoPesquisa
     	}
     	fetch('/FlowerLiu/procura', {
-    		method: 'GET',
+    		method: 'POST',
     		body: JSON.stringify(data)
     	})
     }

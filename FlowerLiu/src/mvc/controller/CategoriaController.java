@@ -38,6 +38,10 @@ public class CategoriaController {
 	 public String home(HttpServletRequest request, HttpServletResponse response) {
 		return "home";
 	}
+	@RequestMapping("/procura")
+	 public String procuraInicio(HttpServletRequest request, HttpServletResponse response) {
+		return "procura";
+	}
 	@RequestMapping(value = "/tweet", method = RequestMethod.POST)
 	@ResponseBody
 	 public String tweetar(@RequestBody String rawJson) {
@@ -136,12 +140,13 @@ public class CategoriaController {
 		request.setAttribute("idCategoria", idCateg);		
 		return "home";
 	}
-	@RequestMapping(value="/procura", method = RequestMethod.GET)
+	@RequestMapping(value="/procura", method = RequestMethod.POST)
 	@ResponseBody
-	 public String procura(@RequestBody String rawJson){
+	 public String procura(@RequestBody(required=false) String rawJson){
 		System.out.println("BUSCO");
 		JSONObject parsedJson = new JSONObject(rawJson);
 		String texto = parsedJson.getString("busca");
+		System.out.println(texto);
 		CategoriasDAO dao = new CategoriasDAO();
 		NotasDAO ndao = new NotasDAO();
 		dao.procuraCategoria(texto);
@@ -195,4 +200,12 @@ public class CategoriaController {
 			e1.printStackTrace();
 		}
 	}
+//	public String resultado(String) {
+//		CategoriasDAO dao = new CategoriasDAO();
+//		NotasDAO ndao = new NotasDAO();
+//		dao.procuraCategoria(texto);
+//		ndao.procuraNota(texto);
+//		dao.close();
+//		return
+//	}
 }
