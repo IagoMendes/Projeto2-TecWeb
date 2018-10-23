@@ -139,8 +139,14 @@ public class CategoriaController {
 	@RequestMapping(value="/procura", method = RequestMethod.GET)
 	@ResponseBody
 	 public String procura(@RequestBody String rawJson){
+		System.out.println("BUSCO");
 		JSONObject parsedJson = new JSONObject(rawJson);
-		String conteudoPesquisa = parsedJson.getString("conteudoPesquisa");
+		String texto = parsedJson.getString("busca");
+		CategoriasDAO dao = new CategoriasDAO();
+		NotasDAO ndao = new NotasDAO();
+		dao.procuraCategoria(texto);
+		ndao.procuraNota(texto);
+		dao.close();
 		return "procura";
 	}
 	

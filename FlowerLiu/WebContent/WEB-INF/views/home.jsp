@@ -205,12 +205,12 @@
 		})
     }
     function pesquisa(){
-    	let conteudoPesquisa = document.getElementById("").value
+    	let conteudoPesquisa = document.getElementById("conteudoPesquisa").value
     	data = {
     		'conteudoPesquisa': conteudoPesquisa
     	}
-    	fetch('/FlowerLiu/procura'{
-    		method: 'GET'
+    	fetch('/FlowerLiu/procura', {
+    		method: 'GET',
     		body: JSON.stringify(data)
     	})
     }
